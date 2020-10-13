@@ -9,16 +9,26 @@ handlers:
   console:
     class: logging.StreamHandler
     formatter: json
-    level: INFO
     stream: ext://sys.stdout
   file:
     class : logging.handlers.RotatingFileHandler
     formatter: json
     filename: /var/log/osm-seed/logfile.log # log files full path
-    level: INFO
     maxBytes: 5242880 # 5 MB
     backupCount: 10
 loggers:
-  tile-renderer:
+  main-debug:
+    handlers: [console, file]
+    level: DEBUG
+  main-info:
     handlers: [console, file]
     level: INFO
+  main-warning:
+    handlers: [console, file]
+    level: WARNING
+  main-error:
+    handlers: [console, file]
+    level: ERROR
+  main-critical:
+    handlers: [console, file]
+    level: CRITICAL
