@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="MapColoniesJSONLogger", 
-    version="0.0.8",
+    version="0.0.9",
     author="MapColonies",
     author_email="mapcolonies@gmail.com",
     description="A JSON logger for map colonies project",

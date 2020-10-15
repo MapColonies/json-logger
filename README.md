@@ -1,26 +1,25 @@
 # json-logger
-## Dependencies
-install `python-json-logger`
 
+## Installation
+Installation with dependencies
 ```
-pip3 install python-json-logger
+pip3 install python-json-logger MapColoniesJSONLogger
 ```
 
 ## Usage Example
-NOTICE: the example assumes that logger.py is in the same directory as your calling module, else a different import method should be used
 ```
 import os
-from json_logger.logger import JSONLogger
+from jsonlogger.logger import JSONLogger
 
 APP_NAME = 'my-service'
 
 # there should be a formatter that uses these fields in configuration yaml (e.g. format: '%(timestamp)s %(service)s')
 additional_constant_fields = {'service': APP_NAME}
 
-# NOTICE: there should be a matching logger name in configuration yaml (e.g. main-debug)
+# NOTICE: there should be a matching logger name in configuration yaml (e.g. main-info)
 log = JSONLogger('main-info', 
-  config_file=os.environ.get('LOG_CONFIG_PATH'),
-  additional_fields=additional_constant_fields).get_logger()
+  config_file=os.environ.get('LOG_CONFIG_PATH'), # optional, if not passed a default log.yaml is used
+  additional_fields=additional_constant_fields)
 
 log.critical('system crashed')
 log.error('incorrect input')
@@ -37,7 +36,7 @@ formatters:
     format: '%(message)s'
   json:
     format: '%(timestamp)s %(service)s %(loglevel)s %(message)s'
-    class: logger.CustomJsonFormatter
+    class: jsonlogger.logger.CustomJsonFormatter
 handlers:
   console:
     class: logging.StreamHandler
@@ -46,7 +45,7 @@ handlers:
   file:
     class : logging.handlers.RotatingFileHandler
     formatter: json
-    filename: logfile.log # log files full path
+    filename: logfile.log # log files full path, if a path is used make sure the directory exists
     maxBytes: 5242880 # 5 MB
     backupCount: 10
 loggers:
