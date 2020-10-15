@@ -1,0 +1,5 @@
+.vscode
+dist
+build
+venv
+*.egg-info
