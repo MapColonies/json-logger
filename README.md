@@ -9,18 +9,18 @@ pip3 install python-json-logger
 ## Usage Example
 NOTICE: the example assumes that logger.py is in the same directory as your calling module, else a different import method should be used
 ```
-import os, sys
-from logger import JSONLogger
+import os
+from json_logger.logger import JSONLogger
 
-# logging config yaml file path
-LOG_CONFIG_PATH = os.environ.get('LOG_CONFIG_PATH', 'log.yaml')
 APP_NAME = 'my-service'
 
 # there should be a formatter that uses these fields in configuration yaml (e.g. format: '%(timestamp)s %(service)s')
 additional_constant_fields = {'service': APP_NAME}
 
 # NOTICE: there should be a matching logger name in configuration yaml (e.g. main-debug)
-log = JSONLogger('main-info', LOG_CONFIG_PATH, additional_constant_fields).get_logger()
+log = JSONLogger('main-info', 
+  config_file=os.environ.get('LOG_CONFIG_PATH'),
+  additional_fields=additional_constant_fields).get_logger()
 
 log.critical('system crashed')
 log.error('incorrect input')
@@ -29,7 +29,7 @@ log.info('some info', extra={'action_id': 3}) # extra fields
 log.debug('some info', extra={'action_id': 4}) # will not be logged because logger level set to INFO ('main-info')
 ```
 
-## Example Configuration YAML
+## Example Configuration YAML used by the package
 ```
 version: 1
 formatters:

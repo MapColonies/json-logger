@@ -1,11 +1,12 @@
 import logging, logging.config, time, yaml
+from os import path
 from pythonjsonlogger import jsonlogger
 
 class JSONLogger:
     """
     Logger with a json formatter
     """
-    def __init__(self, name, config_file, additional_fields):
+    def __init__(self, name, config_file=path.join(path.dirname(__file__), 'log.yaml'), additional_fields=None):
         """
         Class constructor that creates a logger instance
 
@@ -35,7 +36,7 @@ class CustomLoggerAdapter(logging.LoggerAdapter):
     def process(self, msg, kwargs):
         extra = self.extra.copy()
         extra.update(kwargs.get('extra', dict()))
-        extra.update(self.additional_fields)
+        if self.additional_fields: extra.update(self.additional_fields)
         kwargs['extra'] = extra
         return msg, kwargs
 
@@ -53,5 +54,3 @@ class CustomJsonFormatter(jsonlogger.JsonFormatter):
             log_record['loglevel'] = log_record['loglevel'].upper()
         else:
             log_record['loglevel'] = record.levelname
-        # if not log_record.get('service'):
-        #     log_record['service'] = record.name

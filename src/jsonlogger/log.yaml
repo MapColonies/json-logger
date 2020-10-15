@@ -4,7 +4,7 @@ formatters:
     format: '%(message)s'
   json:
     format: '%(timestamp)s %(service)s %(loglevel)s %(message)s'
-    class: logger.CustomJsonFormatter
+    class: jsonlogger.logger.CustomJsonFormatter
 handlers:
   console:
     class: logging.StreamHandler
