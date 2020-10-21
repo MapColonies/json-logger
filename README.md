@@ -7,7 +7,7 @@ pip3 install python-json-logger MapColoniesJSONLogger
 ```
 
 ## Usage Example
-```
+```py
 import os
 from jsonlogger.logger import JSONLogger
 
