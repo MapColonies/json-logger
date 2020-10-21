@@ -1,12 +1,14 @@
-import logging, logging.config, time, yaml
+import logging, logging.config, time
 from os import path
 from pythonjsonlogger import jsonlogger
+
+from jsonlogger.default_config import default_config
 
 class JSONLogger(logging.Logger):
     """
     Logger with a json formatter
     """
-    def __new__(cls, name, config_file=path.join(path.dirname(__file__), 'log.yaml'), additional_fields=None):
+    def __new__(cls, name, config={}, additional_fields=None):
         """
         Constructor that creates a logger instance
 
@@ -15,14 +17,7 @@ class JSONLogger(logging.Logger):
             config_file (str, optional): logging configuration yaml path. Defaults to path.join(path.dirname(__file__), 'log.yaml').
             additional_fields (dict, optional): dict of additional key/value pairs to log. Defaults to None.
         """
-        # import logging configuration yaml
-        with open(config_file, 'r') as log_config:
-            # read the file to dict
-            logging_config = yaml.safe_load(log_config)
-
-            # configure logging using the logging configuration yaml
-            logging.config.dictConfig(logging_config)
-
+        logging.config.dictConfig(default_config.copy().update(config))
         # create logger and save it
         return CustomLoggerAdapter(logging.getLogger(name), additional_fields)
 

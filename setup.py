@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="MapColoniesJSONLogger", 
-    version="0.0.9",
+    version="0.0.10",
     author="MapColonies",
     author_email="mapcolonies@gmail.com",
     description="A JSON logger for map colonies project",
@@ -15,8 +15,7 @@ setuptools.setup(
     package_dir={'': 'src'},
     packages=setuptools.find_packages('src'),
     install_requires=[
-        "python-json-logger >= 2.0.1",
-        "PyYAML >= 5.3.1"
+        "python-json-logger >= 2.0.1"
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
@@ -24,6 +23,4 @@ setuptools.setup(
         "Operating System :: OS Independent"
     ],
     python_requires='>=3.6',
-    package_data={'': ['log.yaml']},
-    include_package_data=True
 )
