@@ -4,6 +4,20 @@ from pythonjsonlogger import jsonlogger
 
 from jsonlogger.default_config import default_config
 
+
+def merge(a, b):
+    for key in b:
+        if key in a:
+            if isinstance(a[key], dict) and isinstance(b[key], dict):
+                merge(a[key], b[key])
+            elif a[key] == b[key]:
+                pass
+            else:
+                a[key] = b[key]
+        else:
+            a[key] = b[key]
+    return a
+
 class JSONLogger(logging.Logger):
     """
     Logger with a json formatter
@@ -17,7 +31,9 @@ class JSONLogger(logging.Logger):
             config_file (str, optional): logging configuration yaml path. Defaults to path.join(path.dirname(__file__), 'log.yaml').
             additional_fields (dict, optional): dict of additional key/value pairs to log. Defaults to None.
         """
-        logging.config.dictConfig(default_config.copy().update(config))
+        merged_config = default_config.copy()
+        merged_config = merge(merged_config, config)
+        logging.config.dictConfig(merged_config)
         # create logger and save it
         return CustomLoggerAdapter(logging.getLogger(name), additional_fields)
 
