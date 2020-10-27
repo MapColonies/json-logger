@@ -24,11 +24,11 @@ class JSONLogger(logging.Logger):
     """
     def __new__(cls, name, config={}, additional_fields=None):
         """
-        Constructor that creates a logger instance
+        Constructor that creates a logger instance (wrapped by an adapter)
 
         Args:
             name (str): name to associate with the logger
-            config_file (str, optional): logging configuration yaml path. Defaults to path.join(path.dirname(__file__), 'log.yaml').
+            config (dict, optional): logging configuration dict. Defaults to {}.
             additional_fields (dict, optional): dict of additional key/value pairs to log. Defaults to None.
         """
         merged_config = default_config.copy()
@@ -52,9 +52,6 @@ class CustomLoggerAdapter(logging.LoggerAdapter):
 
 
 class CustomJsonFormatter(jsonlogger.JsonFormatter):
-    """
-    A custom json formatter
-    """
     def add_fields(self, log_record, record, message_dict):
         super(CustomJsonFormatter, self).add_fields(log_record, record, message_dict)
         if not log_record.get('timestamp'):
@@ -64,3 +61,4 @@ class CustomJsonFormatter(jsonlogger.JsonFormatter):
             log_record['loglevel'] = log_record['loglevel'].upper()
         else:
             log_record['loglevel'] = record.levelname
+

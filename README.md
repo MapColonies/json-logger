@@ -1,22 +1,20 @@
 # json-logger
 
 ## Installation
-Installation with dependencies
 ```
-pip3 install python-json-logger MapColoniesJSONLogger
+pip3 install mapcoloniesjsonlogger
 ```
 
 ## Usage Example
 ```py
-import os
 from jsonlogger.logger import JSONLogger
 
 APP_NAME = 'my-service'
 
-# there should be a formatter that uses these fields in configuration yaml (e.g. format: '%(timestamp)s %(service)s')
+# NOTICE: there should be a formatter that uses these fields in configuration dict (e.g. format: '%(timestamp)s %(service)s')
 additional_constant_fields = {'service': APP_NAME}
 
-# NOTICE: there should be a matching logger name in configuration yaml (e.g. main-info)
+# NOTICE: there should be a matching logger name in configuration dict (e.g. main-info)
 log = JSONLogger('main-info', 
   config={'handlers': {'file': {'filename': 'Meow.log'}}}, # Optional, override values
   additional_fields=additional_constant_fields)
@@ -28,7 +26,8 @@ log.info('some info', extra={'action_id': 3}) # extra fields
 log.debug('some info', extra={'action_id': 4}) # will not be logged because logger level set to INFO ('main-info')
 ```
 
-## Example Configuration YAML used by the package
+## Configuration Example
+The configuration dict bellow is used by the package. For more information on logging configuration see [logging.config](https://docs.python.org/3.6/library/logging.config.html#module-logging.config) docs
 ```py
 {
   'version': 1,
@@ -93,5 +92,4 @@ log.debug('some info', extra={'action_id': 4}) # will not be logged because logg
     }
   }
 }
-
 ```
