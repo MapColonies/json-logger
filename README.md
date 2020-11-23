@@ -49,7 +49,7 @@ The configuration dict bellow is used by the package. For more information on lo
     'file': {
       'class': 'logging.handlers.RotatingFileHandler',
       'formatter': 'json',
-      'filename': '/var/log/osm-seed/logfile.log',
+      'filename': '/var/log/map-colonies/service.log',
       'maxBytes': 5242880,
       'backupCount': 10
     }
