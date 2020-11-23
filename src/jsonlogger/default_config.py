@@ -18,7 +18,7 @@ default_config = {
     'file': {
       'class': 'logging.handlers.RotatingFileHandler',
       'formatter': 'json',
-      'filename': '/var/log/osm-seed/logfile.log',
+      'filename': '/var/log/map-colonies/service.log',
       'maxBytes': 5242880,
       'backupCount': 10
     }

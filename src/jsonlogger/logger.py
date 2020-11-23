@@ -5,7 +5,7 @@ from pythonjsonlogger import jsonlogger
 from jsonlogger.default_config import default_config
 
 
-def merge(a, b):
+def merge(a: dict, b: dict):
     for key in b:
         if key in a:
             if isinstance(a[key], dict) and isinstance(b[key], dict):
@@ -22,15 +22,17 @@ class JSONLogger(logging.Logger):
     """
     Logger with a json formatter
     """
-    def __new__(cls, name, config={}, additional_fields=None):
+    def __new__(cls, name: str, config: dict = {}, additional_fields: dict = None):
         """
         Constructor that creates a logger instance (wrapped by an adapter)
 
         Args:
             name (str): name to associate with the logger
-            config (dict, optional): logging configuration dict. Defaults to {}.
+            config (dict, optional): logging configuration
             additional_fields (dict, optional): dict of additional key/value pairs to log. Defaults to None.
         """
+        if len(name) == 0:
+            raise Exception('Name of the logger must be present')
         merged_config = default_config.copy()
         merged_config = merge(merged_config, config)
         logging.config.dictConfig(merged_config)
