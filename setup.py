@@ -5,17 +5,16 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="MapColoniesJSONLogger", 
-    version="0.0.16",
+    version="1.0.0",
     author="MapColonies",
     author_email="mapcolonies@gmail.com",
     description="A JSON logger for map colonies project",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/MapColonies/json-logger",
-    package_dir={'': 'src'},
-    packages=setuptools.find_packages('src'),
+    packages=setuptools.find_packages(),
     install_requires=[
-        "python-json-logger >= 2.0.1"
+        "ecs-logging==0.5.0"
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
