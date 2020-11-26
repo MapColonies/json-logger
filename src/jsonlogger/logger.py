@@ -22,7 +22,7 @@ class JSONLogger(logging.Logger):
     """
     Logger with a json formatter
     """
-    def __new__(cls, name: str, config: dict = {}, additional_fields: dict = None):
+    def __init__(self, name: str, config: dict = {}, additional_fields: dict = None):
         """
         Constructor that creates a logger instance (wrapped by an adapter)
 
@@ -37,8 +37,22 @@ class JSONLogger(logging.Logger):
         merged_config = merge(merged_config, config)
         logging.config.dictConfig(merged_config)
         # create logger and save it
-        return CustomLoggerAdapter(logging.getLogger(name), additional_fields)
+        self.inner_logger = CustomLoggerAdapter(logging.getLogger(name), additional_fields)
 
+    def warn(self, **kwargs):
+        self.inner_logger.warn(**kwargs)
+
+    def info(self, **kwargs):
+        self.inner_logger.info(**kwargs)
+
+    def debug(self, **kwargs):
+        self.inner_logger.debug(**kwargs)
+
+    def error(self, **kwargs):
+        self.inner_logger.error(**kwargs)
+
+    def critical(self, **kwargs):
+        self.inner_logger.critical(**kwargs)
 
 class CustomLoggerAdapter(logging.LoggerAdapter):
     def __init__(self, logger, additional_fields):
@@ -63,4 +77,3 @@ class CustomJsonFormatter(jsonlogger.JsonFormatter):
             log_record['loglevel'] = log_record['loglevel'].upper()
         else:
             log_record['loglevel'] = record.levelname
-
